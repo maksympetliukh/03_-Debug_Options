@@ -1,0 +1,35 @@
+# ----------------------------
+# STM32 / Embedded C/C++ project
+# ----------------------------
+
+# Build output
+/build/
+/Debug/
+/Release/
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
+# Object files
+*.o
+*.d
+*.a
+
+# Temporary / backup files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.log
+
+# IDE specific (CubeIDE / Eclipse / VSCode)
+*.launch
+*.cproject
+*.project
+.settings/
+.vscode/
+
+# STM32CubeMX generated files (optional)
+*.ioc.d/
