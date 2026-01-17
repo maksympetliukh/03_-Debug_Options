@@ -16,14 +16,89 @@
  ******************************************************************************
  */
 
-#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+int numbers[] = {456, 345, 678, 456, 3456, 765, 456, 896, 456,678, 987, 000, 145, 90};
+
+int some_data = 90;
+
+void array_fill_numbers(int p_numbers[], unsigned int len){
+	for(int i = 0; i < len; i++){
+		p_numbers[i] = rand() % 1000;
+	}
+}
+
+void display_numbers(int* p_numbers, unsigned int len, char* p_message){
+	printf("%s", p_message);
+
+	for(int i = 0; i < len; i++){
+		printf("%5d", p_numbers[i]);
+	}
+	printf("\n");
+}
+
+void swap_numbers(int* x, int* y){
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+#if 0
+	void (*jump_addr) (void);
+	jump_addr = (void*)0x20000009;
+	jump_addr();
 #endif
+	some_data = 10;
+}
 
-int main(void)
-{
-    /* Loop forever */
-	for(;;);
+void bubble_sort(int* p_numbers, int len){
+	int i, j, flag = 0;
+	for(i = 0; i < len - 1; i++){
+		flag = 0;
+
+		for(j = 0; j < len - 1 - i; j++){
+			if(p_numbers[j] > p_numbers[j + 1]){
+				swap_numbers(&p_numbers[j], &p_numbers[i]);
+				flag = 1;
+			}
+		}
+		if(flag == 0){
+			break;
+		}
+	}
+}
+
+void insertion_sort(int* p_numbers, int len){
+	int i, j, num;
+	for(i = 1; i < len; i++){
+		j = i - 1;
+		num = p_numbers[i];
+		while((j > - 1) && (p_numbers[j] > num)){
+			p_numbers[j + 1] = p_numbers[j];
+			j--;
+		}
+		p_numbers[j + 1] = num;
+	}
+}
+
+int main(void){
+	int len = sizeof(numbers) / sizeof(int);
+
+	array_fill_numbers (numbers, len);
+
+	display_numbers(numbers, len, "B-usorted array: ");
+
+	bubble_sort(numbers, len);
+
+	display_numbers(numbers, len, "B-sorted array: ");
+
+	array_fill_numbers(numbers, len);
+
+	display_numbers(numbers, len, "I-sorted array: ");
+
+	insertion_sort(numbers, len);
+
+	display_numbers(numbers, len, "I-sorted array: ");
+
+	return EXIT_SUCCESS;
 }
